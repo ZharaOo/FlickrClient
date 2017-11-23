@@ -7,7 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+@protocol FlickrServiceDelegate <NSObject>
+- (void)errorLoadingDataWithTitle:(NSString *)title description:(NSString *)errorDescription;
+@optional
+- (void)getReceivedData:(NSArray *)data;
+@end
 
 @interface FlickrService : NSObject
+
++ (void)getTenHotTagsWithDelegate:(id <FlickrServiceDelegate>)delegate;
 
 @end
