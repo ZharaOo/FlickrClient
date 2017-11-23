@@ -7,14 +7,27 @@
 //
 
 #import <Foundation/Foundation.h>
-@protocol FlickrServiceDelegate <NSObject>
+
+@class PhotoImage;
+
+@protocol FlickrServiceErrorDelegate <NSObject>
 - (void)errorLoadingDataWithTitle:(NSString *)title description:(NSString *)errorDescription;
-@optional
-- (void)getReceivedData:(NSArray *)data;
 @end
 
-@interface FlickrService : NSObject
+@protocol FlickrServiceTagsDelegate <FlickrServiceErrorDelegate>
+- (void)setReceivedTags:(NSArray *)tags;
+@end
 
-+ (void)getTenHotTagsWithDelegate:(id <FlickrServiceDelegate>)delegate;
+@protocol FlickrServicePhotosDelegate <FlickrServiceErrorDelegate>
+- (void)setReceivedPhotosIDs:(NSArray *)photosID;
+- (void)addLoadedPhotosSize:(NSDictionary *)photosSize;
+- (void)addLoadedPhoto:(PhotoImage *)image;
+@end
 
+@interface FlickrService : NSObject <NSURLSessionDataDelegate>
+
++ (void)loadTenHotTagsWithDelegate:(id <FlickrServiceTagsDelegate>)delegate;
++ (void)loadPhotoIDsWithTag:(NSString *)tag delegate:(id <FlickrServicePhotosDelegate>)delegate;
++ (void)loadPhotoWithURL:(NSURL *)url photoID:(NSString *)photoID delegate:(id <FlickrServicePhotosDelegate>)delegate;
++ (void)loadSizeOfPhotosWithID:(NSArray *)photoIDs delegate:(id <FlickrServicePhotosDelegate>)delegate;
 @end

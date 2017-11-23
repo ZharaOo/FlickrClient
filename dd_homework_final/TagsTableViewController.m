@@ -7,9 +7,14 @@
 //
 
 #import "TagsTableViewController.h"
+#import "PhotosCollectionViewController.h"
 #import "FlickrService.h"
 
-@interface TagsTableViewController () <FlickrServiceDelegate>
+#define SHOW_PHOTOS_SEGUE_ID @"photosCollectionSegue"
+
+@interface TagsTableViewController () <FlickrServiceTagsDelegate> {
+    NSString *selectedTag;
+}
 
 @property (nonatomic, copy) NSArray *tags;
 
@@ -32,11 +37,11 @@
 }
 
 - (void)loadContent {
-    [FlickrService getTenHotTagsWithDelegate:self];
+    [FlickrService loadTenHotTagsWithDelegate:self];
 }
 
-- (void)getReceivedData:(NSArray *)data {
-    self.tags = data;
+- (void)setReceivedTags:(NSArray *)tags {
+    self.tags = tags;
     [self.tableView reloadData];
     [self.refreshControl endRefreshing];
 }
@@ -45,6 +50,8 @@
     UIAlertController* alert = [UIAlertController alertControllerWithTitle:title
                                                                    message:errorDescription
                                                             preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
+    [alert addAction:defaultAction];
     [self presentViewController:alert animated:YES completion:nil];
 }
 
@@ -55,57 +62,28 @@
     return self.tags.count;
 }
 
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TableViewCell" forIndexPath:indexPath];
     
     cell.textLabel.text = self.tags[indexPath.row];
     
     return cell;
 }
 
-/*
- // Override to support conditional editing of the table view.
- - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
- // Return NO if you do not want the specified item to be editable.
- return YES;
- }
- */
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    selectedTag = cell.textLabel.text;
+    [self performSegueWithIdentifier:SHOW_PHOTOS_SEGUE_ID sender:self];
+}
 
-/*
- // Override to support editing the table view.
- - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
- if (editingStyle == UITableViewCellEditingStyleDelete) {
- // Delete the row from the data source
- [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
- } else if (editingStyle == UITableViewCellEditingStyleInsert) {
- // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
- }
- }
- */
-
-/*
- // Override to support rearranging the table view.
- - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
- }
- */
-
-/*
- // Override to support conditional rearranging of the table view.
- - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
- // Return NO if you do not want the item to be re-orderable.
- return YES;
- }
- */
-
-/*
  #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
+
  - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
+     if ([segue.identifier isEqual:SHOW_PHOTOS_SEGUE_ID]) {
+         PhotosCollectionViewController *dvc = (PhotosCollectionViewController *)segue.destinationViewController;
+         dvc.selectedTag = selectedTag;
+     }
  }
- */
 
 @end
