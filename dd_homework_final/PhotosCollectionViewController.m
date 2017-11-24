@@ -7,10 +7,12 @@
 //
 
 #import "PhotosCollectionViewController.h"
-#import "TagPhotos.h"
+#import "TagPhotosService.h"
 #import "PhotoImage.h"
 
-@interface PhotosCollectionViewController () <TagPhotosDelegate>
+@interface PhotosCollectionViewController () <TagPhotosDelegate> {
+    TagPhotosService *service;
+}
 
 @property (nonatomic, strong) NSMutableArray *photos;
 @property (nonatomic, strong) UIActivityIndicatorView *indicator;
@@ -35,9 +37,20 @@ static NSString * const reuseIdentifier = @"CollectionCell";
     
     self.photos = [[NSMutableArray alloc] init];
     
-    TagPhotos *tp = [[TagPhotos alloc] init];
-    tp.delegate = self;
-    [tp loadTagPhotos:self.selectedTag];
+    service = [[TagPhotosService alloc] init];
+    service.delegate = self;
+    [service loadTagPhotos:self.selectedTag];
+}
+
+- (void)addPhotoImage:(PhotoImage *)photoImage {
+    [self.photos addObject:photoImage];
+    [self.collectionView reloadData];
+}
+
+- (void)updateNumberOfPhotos {
+    [self.indicator stopAnimating];
+    self.indicator.hidden = YES;
+    [self.collectionView reloadData];
 }
 
 - (void)errorLoadingDataWithTitle:(NSString *)title description:(NSString *)errorDescription {
@@ -47,15 +60,10 @@ static NSString * const reuseIdentifier = @"CollectionCell";
     [self presentViewController:alert animated:YES completion:nil];
 }
 
-- (void)addPhotoImage:(PhotoImage *)photoImage {
-    [self.photos addObject:photoImage];
-    [self.collectionView reloadData];
-}
-
 #pragma mark <UICollectionViewDataSource>
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return self.photos.count;
+    return service.nubmerOfPhotos;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -78,6 +86,21 @@ static NSString * const reuseIdentifier = @"CollectionCell";
 
 #pragma mark <UICollectionViewDelegate>
 
+- (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row < self.photos.count) {
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+    //UICollectionViewCell *datasetCell = [collectionView cellForItemAtIndexPath:indexPath];
+    
+    NSLog(@"Number of selected cell %lu", indexPath.row);
+}
+
 /*
 // Uncomment this method to specify if the specified item should be highlighted during tracking
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -87,9 +110,7 @@ static NSString * const reuseIdentifier = @"CollectionCell";
 
 /*
 // Uncomment this method to specify if the specified item should be selected
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    return YES;
-}
+
 */
 
 /*

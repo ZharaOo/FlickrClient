@@ -12,9 +12,13 @@
 
 @protocol TagPhotosDelegate <NSObject>
 - (void)addPhotoImage:(PhotoImage *)photoImage;
+- (void)updateNumberOfPhotos;
 @end
 
-@interface TagPhotos : NSObject
+@interface TagPhotosService : NSObject
+
+@property (nonatomic, assign) NSInteger nubmerOfPhotos;
 @property (nonatomic, weak) id <TagPhotosDelegate> delegate;
 - (void)loadTagPhotos:(NSString *)tag;
+
 @end

@@ -8,12 +8,13 @@
 
 #import "TagsTableViewController.h"
 #import "PhotosCollectionViewController.h"
-#import "FlickrService.h"
+#import "TagsService.h"
 
 #define SHOW_PHOTOS_SEGUE_ID @"photosCollectionSegue"
 
-@interface TagsTableViewController () <FlickrServiceTagsDelegate> {
+@interface TagsTableViewController () <TagsServiceDelegate> {
     NSString *selectedTag;
+    TagsService *service;
 }
 
 @property (nonatomic, copy) NSArray *tags;
@@ -27,17 +28,20 @@
     
     self.navigationItem.title = @"10 Popular tags";
     
+    service = [[TagsService alloc] init];
+    service.delegate = self;
+    
     self.refreshControl = [[UIRefreshControl alloc] init];
     self.refreshControl.backgroundColor = [UIColor lightGrayColor];
     [self.refreshControl addTarget:self
-                            action:@selector(loadContent)
+                            action:@selector(updateTags)
                   forControlEvents:UIControlEventValueChanged];
-    [self loadContent];
     [self.refreshControl beginRefreshing];
+    [self updateTags];
 }
 
-- (void)loadContent {
-    [FlickrService loadTenHotTagsWithDelegate:self];
+- (void)updateTags {
+    [service loadTags];
 }
 
 - (void)setReceivedTags:(NSArray *)tags {
@@ -54,7 +58,6 @@
     [alert addAction:defaultAction];
     [self presentViewController:alert animated:YES completion:nil];
 }
-
 
 #pragma mark - Table view data source
 
