@@ -9,7 +9,7 @@
 #import "TagPhotosService.h"
 #import "FlickrNetwork.h"
 
-@interface TagPhotosService () <FlickrNetworkPhotosDelegate>
+@interface TagPhotosService () <FlickrNetworkTagPhotosDelegate>
 
 @property (nonatomic, copy) NSString *tag;
 //@property (nonatomic, copy) NSArray *photoIDs;

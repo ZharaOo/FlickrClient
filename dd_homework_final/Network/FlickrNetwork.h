@@ -18,18 +18,19 @@
 - (void)setReceivedTags:(NSArray *)tags;
 @end
 
-@protocol FlickrNetworkPhotosDelegate <FlickrNetworkErrorDelegate>
-- (void)setReceivedPhotosIDs:(NSArray *)photosID;
+@protocol FlickrNetworkTagPhotosDelegate <FlickrNetworkErrorDelegate>
 - (void)addLoadedPhoto:(PhotoImage *)image;
+@optional
+- (void)setReceivedPhotosIDs:(NSArray *)photosID;
 @end
 
 @interface FlickrNetwork : NSObject
 
 + (void)loadTenHotTagsWithDelegate:(id <FlickrNetworkTagsDelegate>)delegate;
 
-+ (void)loadPhotoIDsWithTag:(NSString *)tag delegate:(id <FlickrNetworkPhotosDelegate>)delegate;
-+ (void)loadSizeOfPhotosWithID:(NSArray *)photoIDs delegate:(id <FlickrNetworkPhotosDelegate>)delegate;
++ (void)loadPhotoIDsWithTag:(NSString *)tag delegate:(id <FlickrNetworkTagPhotosDelegate>)delegate;
++ (void)loadSizeOfPhotosWithID:(NSArray *)photoIDs delegate:(id <FlickrNetworkTagPhotosDelegate>)delegate;
 
-+ (void)loadPhotoWithSize:(NSString *)size photoID:(NSDictionary *)photoSizesURL session:(NSURLSession *)session delegate:(id <FlickrNetworkPhotosDelegate>)delegate;
++ (void)loadPhotoWithSize:(NSString *)size photoSizes:(NSDictionary *)photoSizesURL session:(NSURLSession *)session delegate:(id <FlickrNetworkTagPhotosDelegate>)delegate;
 
 @end

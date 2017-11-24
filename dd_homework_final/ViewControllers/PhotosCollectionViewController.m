@@ -7,11 +7,16 @@
 //
 
 #import "PhotosCollectionViewController.h"
+#import "ShowPhotoViewController.h"
 #import "TagPhotosService.h"
 #import "PhotoImage.h"
 
+#define SHOW_VIEW_PHOTO_ID @"viewPhotoSegue"
+
 @interface PhotosCollectionViewController () <TagPhotosDelegate> {
     TagPhotosService *service;
+    
+    NSDictionary *chosenImageSizes;
 }
 
 @property (nonatomic, strong) NSMutableArray *photos;
@@ -50,6 +55,7 @@ static NSString * const reuseIdentifier = @"CollectionCell";
 - (void)updateNumberOfPhotos {
     [self.indicator stopAnimating];
     self.indicator.hidden = YES;
+    
     [self.collectionView reloadData];
 }
 
@@ -95,14 +101,18 @@ static NSString * const reuseIdentifier = @"CollectionCell";
 }
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    
-    //UICollectionViewCell *datasetCell = [collectionView cellForItemAtIndexPath:indexPath];
+    PhotoImage *photoImage = self.photos[indexPath.row];
+    chosenImageSizes = photoImage.sizes;
+    [self performSegueWithIdentifier:SHOW_VIEW_PHOTO_ID sender:self];
 }
 
  #pragma mark - Navigation
 
  - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-     
+     if ([segue.identifier isEqual:SHOW_VIEW_PHOTO_ID]) {
+         ShowPhotoViewController *dvc = (ShowPhotoViewController *)segue.destinationViewController;
+         dvc.sizes = chosenImageSizes;
+     }
  }
 
 @end
