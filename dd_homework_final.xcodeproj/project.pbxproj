@@ -75,16 +75,9 @@
 			children = (
 				2C4C293B1FC5FBE300C34128 /* AppDelegate.h */,
 				2C4C293C1FC5FBE300C34128 /* AppDelegate.m */,
-				2C4C29571FC618AC00C34128 /* TagsTableViewController.h */,
-				2C4C29581FC618AC00C34128 /* TagsTableViewController.m */,
-				2CDE8C641FC7363C0068FED5 /* PhotosCollectionViewController.h */,
-				2CDE8C651FC7363C0068FED5 /* PhotosCollectionViewController.m */,
-				2CDE8C6D1FC774B30068FED5 /* TagPhotosService.h */,
-				2CDE8C6E1FC774B30068FED5 /* TagPhotosService.m */,
-				2C7EDDF81FC866D1002C8450 /* TagsService.h */,
-				2C7EDDF91FC866D1002C8450 /* TagsService.m */,
-				2C4C29511FC5FF6600C34128 /* FlickrNetwork.h */,
-				2C4C29521FC5FF6600C34128 /* FlickrNetwork.m */,
+				2CBC99E01FC88E1A00522FB4 /* ViewControllers */,
+				2CBC99DF1FC88DE500522FB4 /* Services */,
+				2CBC99E11FC8907B00522FB4 /* Network */,
 				2CDE8C6A1FC747950068FED5 /* PhotoImage.h */,
 				2CDE8C6B1FC747950068FED5 /* PhotoImage.m */,
 				2C4C29411FC5FBE300C34128 /* Main.storyboard */,
@@ -94,6 +87,37 @@
 				2C4C294A1FC5FBE300C34128 /* main.m */,
 			);
 			path = dd_homework_final;
+			sourceTree = "<group>";
+		};
+		2CBC99DF1FC88DE500522FB4 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				2CDE8C6D1FC774B30068FED5 /* TagPhotosService.h */,
+				2CDE8C6E1FC774B30068FED5 /* TagPhotosService.m */,
+				2C7EDDF81FC866D1002C8450 /* TagsService.h */,
+				2C7EDDF91FC866D1002C8450 /* TagsService.m */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		2CBC99E01FC88E1A00522FB4 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				2C4C29571FC618AC00C34128 /* TagsTableViewController.h */,
+				2C4C29581FC618AC00C34128 /* TagsTableViewController.m */,
+				2CDE8C641FC7363C0068FED5 /* PhotosCollectionViewController.h */,
+				2CDE8C651FC7363C0068FED5 /* PhotosCollectionViewController.m */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		2CBC99E11FC8907B00522FB4 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				2C4C29511FC5FF6600C34128 /* FlickrNetwork.h */,
+				2C4C29521FC5FF6600C34128 /* FlickrNetwork.m */,
+			);
+			path = Network;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

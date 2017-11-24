@@ -30,6 +30,6 @@
 + (void)loadPhotoIDsWithTag:(NSString *)tag delegate:(id <FlickrNetworkPhotosDelegate>)delegate;
 + (void)loadSizeOfPhotosWithID:(NSArray *)photoIDs delegate:(id <FlickrNetworkPhotosDelegate>)delegate;
 
-+ (void)loadPhotoWithURL:(NSURL *)url photoID:(NSString *)photoID delegate:(id <FlickrNetworkPhotosDelegate>)delegate;
++ (void)loadPhotoWithSize:(NSString *)size photoID:(NSDictionary *)photoSizesURL session:(NSURLSession *)session delegate:(id <FlickrNetworkPhotosDelegate>)delegate;
 
 @end

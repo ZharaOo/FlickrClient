@@ -17,6 +17,8 @@
 
 @interface TagPhotosService : NSObject
 
+- (id)initWithTag:(NSString *)tag;
+
 @property (nonatomic, assign) NSInteger nubmerOfPhotos;
 @property (nonatomic, weak) id <TagPhotosDelegate> delegate;
 - (void)loadTagPhotos:(NSString *)tag;
