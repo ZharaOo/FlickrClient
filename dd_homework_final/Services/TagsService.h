@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @protocol TagsServiceDelegate <NSObject>
+- (void)errorLoadingDataWithTitle:(NSString *)title description:(NSString *)errorDescription;
 - (void)setReceivedTags:(NSArray *)tags;
 @end
 

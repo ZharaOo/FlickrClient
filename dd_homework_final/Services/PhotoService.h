@@ -11,6 +11,7 @@
 @class PhotoImage;
 
 @protocol PhotoServiceDelegate <NSObject>
+- (void)errorLoadingDataWithTitle:(NSString *)title description:(NSString *)errorDescription;
 - (void)setLoadedPhoto:(PhotoImage *)photoImage;
 @end
 

@@ -11,16 +11,17 @@
 @class PhotoImage;
 
 @protocol ParamPhotosDelegate <NSObject>
+- (void)errorLoadingDataWithTitle:(NSString *)title description:(NSString *)errorDescription;
 - (void)addPhotoImage:(PhotoImage *)photoImage;
 - (void)updateNumberOfPhotos;
 @end
 
 @interface ParamPhotosService : NSObject
 
-- (id)initWithTag:(NSString *)tag;
-
 @property (nonatomic, assign) NSInteger nubmerOfPhotos;
 @property (nonatomic, weak) id <ParamPhotosDelegate> delegate;
+
 - (void)loadTagPhotos:(NSString *)tag;
+- (void)loadTextPhotos:(NSString *)text;
 
 @end
