@@ -51,7 +51,7 @@ static NSString * const reuseIdentifier = @"CollectionCell";
 - (void)loadPhotos {
     if (self.selectedContent.type == ContentTypeTag) {
         [service loadTagPhotos:self.selectedContent.content];
-    } else if (self.selectedContent.type == ContentTypeText){
+    } else if (self.selectedContent.type == ContentTypeText) {
         [service loadTextPhotos:self.selectedContent.content];
     }
 }
@@ -69,10 +69,14 @@ static NSString * const reuseIdentifier = @"CollectionCell";
 }
 
 - (void)errorLoadingDataWithTitle:(NSString *)title description:(NSString *)errorDescription {
-    UIAlertController* alert = [UIAlertController alertControllerWithTitle:title
-                                                                   message:errorDescription
-                                                            preferredStyle:UIAlertControllerStyleAlert];
-    [self presentViewController:alert animated:YES completion:nil];
+    if (self.view.window) {
+        UIAlertController* alert = [UIAlertController alertControllerWithTitle:title
+                                                                       message:errorDescription
+                                                                preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
+        [alert addAction:defaultAction];
+        [self presentViewController:alert animated:YES completion:nil];
+    }
 }
 
 #pragma mark <UICollectionViewDataSource>

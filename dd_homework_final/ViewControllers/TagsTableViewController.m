@@ -59,12 +59,15 @@
 }
 
 - (void)errorLoadingDataWithTitle:(NSString *)title description:(NSString *)errorDescription {
-    UIAlertController* alert = [UIAlertController alertControllerWithTitle:title
-                                                                   message:errorDescription
-                                                            preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
-    [alert addAction:defaultAction];
-    [self presentViewController:alert animated:YES completion:nil];
+    [self.refreshControl endRefreshing];
+    if (self.view.window) {
+        UIAlertController* alert = [UIAlertController alertControllerWithTitle:title
+                                                                       message:errorDescription
+                                                                preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
+        [alert addAction:defaultAction];
+        [self presentViewController:alert animated:YES completion:nil];
+    }
 }
 
 - (IBAction)showSearchPhotoByTextField:(id)sender {
@@ -104,7 +107,6 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TableViewCell" forIndexPath:indexPath];
-    
     cell.textLabel.text = self.tags[indexPath.row];
     
     return cell;

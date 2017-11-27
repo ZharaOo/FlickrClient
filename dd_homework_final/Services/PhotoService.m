@@ -24,7 +24,7 @@
 }
 
 - (void)errorLoadingDataWithTitle:(NSString *)title description:(NSString *)errorDescription {
-    
+    [self.delegate errorLoadingDataWithTitle:title description:errorDescription];
 }
 
 @end

@@ -101,7 +101,9 @@
                 [delegate addLoadedPhoto:img];
             });
         } else {
-            //[delegate errorLoadingDataWithTitle:@"Error loading data" description:error.description];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [delegate errorLoadingDataWithTitle:@"Error loading data" description:error.localizedDescription];
+            });
         }
      }] resume];
 }
@@ -128,18 +130,23 @@
             
             if (jsonError) {
                 return @{@"Error" : @"Serialization error",
-                         @"Description" :  jsonError.description};
+                         @"Description" :  jsonError.localizedDescription};
             } else {
-                return jsonResponse;
+                if ([[jsonResponse objectForKey:@"stat"] isEqual:@"fail"]) {
+                    return @{@"Error" : [jsonResponse objectForKey:@"stat"],
+                             @"Description" : [jsonResponse objectForKey:@"message"]};
+                } else {
+                    return jsonResponse;
+                }
             }
         } else {
-            NSString *errorDescription = [NSString stringWithFormat:@"Server error code %lu", response.statusCode];
+            NSString *errorDescription = [NSString stringWithFormat:@"Error code %lu", response.statusCode];
             return @{@"Error" : @"Error loading data",
                      @"Description" : errorDescription};
         }
     } else {
         return @{@"Error" : @"Connection error",
-                 @"Description" : error.description};
+                 @"Description" : error.localizedDescription};
     }
 }
 

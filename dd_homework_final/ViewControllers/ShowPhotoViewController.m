@@ -47,4 +47,15 @@
     self.photoImageView.image = photoImage.image;
 }
 
+- (void)errorLoadingDataWithTitle:(NSString *)title description:(NSString *)errorDescription {
+    if (self.view.window) {
+        UIAlertController* alert = [UIAlertController alertControllerWithTitle:title
+                                                                       message:errorDescription
+                                                                preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
+        [alert addAction:defaultAction];
+        [self presentViewController:alert animated:YES completion:nil];
+    }
+}
+
 @end
