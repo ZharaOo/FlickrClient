@@ -33,7 +33,14 @@
                             <outlet property="delegate" destination="2gH-Tx-fQV" id="eGg-cA-Pi8"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="rdh-j5-xB5"/>
+                    <navigationItem key="navigationItem" id="rdh-j5-xB5">
+                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="Q6Q-Yo-bIU">
+                            <inset key="imageInsets" minX="0.0" minY="0.0" maxX="10" maxY="0.0"/>
+                            <connections>
+                                <action selector="showSearchPhotoByTextField:" destination="2gH-Tx-fQV" id="XZx-xc-Mnh"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <segue destination="jPO-qi-ulY" kind="push" identifier="photosCollectionSegue" id="w7v-XH-MDT"/>
                     </connections>

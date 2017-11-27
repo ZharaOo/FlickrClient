@@ -13,12 +13,13 @@
 
 #define SHOW_PHOTOS_SEGUE_ID @"photosCollectionSegue"
 
-@interface TagsTableViewController () <TagsServiceDelegate> {
+@interface TagsTableViewController () <TagsServiceDelegate, UITextFieldDelegate> {
     NSString *selectedTag;
     TagsService *service;
 }
 
 @property (nonatomic, copy) NSArray *tags;
+@property (strong, nonatomic) UITextField *searchTextField;
 
 @end
 
@@ -28,6 +29,11 @@
     [super viewDidLoad];
     
     self.navigationItem.title = @"10 Popular tags";
+    
+    self.searchTextField = [[UITextField alloc] initWithFrame:CGRectMake(0.0, 0.0, self.tableView.frame.size.width, 30.0)];
+    self.searchTextField.borderStyle = UITextBorderStyleRoundedRect;
+    self.searchTextField.returnKeyType = UIReturnKeySearch;
+    self.searchTextField.delegate = self;
     
     service = [[TagsService alloc] init];
     service.delegate = self;
@@ -58,6 +64,34 @@
     UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
     [alert addAction:defaultAction];
     [self presentViewController:alert animated:YES completion:nil];
+}
+
+- (IBAction)showSearchPhotoByTextField:(id)sender {
+    if (self.tableView.tableHeaderView) {
+        [self showHeaderWithTextField:nil];
+        [self.searchTextField endEditing:YES];
+    } else {
+        [self showHeaderWithTextField:self.searchTextField];
+        [self.searchTextField becomeFirstResponder];
+        self.searchTextField.text = @"Search text";
+        [self.searchTextField selectAll:nil];
+    }
+}
+
+- (void)showHeaderWithTextField:(UITextField *)textField {
+    [UIView animateWithDuration:0.3 animations:^{
+        self.tableView.tableHeaderView = textField;
+    }];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    if (textField == self.searchTextField) {
+        if ([textField hasText]) {
+            
+        }
+        return NO;
+    }
+    return YES;
 }
 
 #pragma mark - Table view data source
