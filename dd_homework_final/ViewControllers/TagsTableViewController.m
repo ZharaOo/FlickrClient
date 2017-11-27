@@ -34,6 +34,7 @@
     self.searchTextField.borderStyle = UITextBorderStyleRoundedRect;
     self.searchTextField.returnKeyType = UIReturnKeySearch;
     self.searchTextField.backgroundColor = [UIColor lightGrayColor];
+    self.searchTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
     self.searchTextField.delegate = self;
     
     service = [[TagsService alloc] init];
