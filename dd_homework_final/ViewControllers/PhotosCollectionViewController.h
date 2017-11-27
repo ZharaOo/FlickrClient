@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class SearchContent;
+
 @interface PhotosCollectionViewController : UICollectionViewController
 
-@property (nonatomic, copy) NSString *selectedTag;
+@property (nonatomic, strong) SearchContent *selectedContent;
 
 @end

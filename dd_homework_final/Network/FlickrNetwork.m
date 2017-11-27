@@ -38,7 +38,8 @@
 }
 
 + (void)loadPhotoIDsWithText:(NSString *)text delegate:(id <FlickrNetworkParamPhotosDelegate>)delegate {
-    NSURL *requestUrl = [NSURL URLWithString:[[NSString stringWithFormat:@"%@api_key=%@&method=flickr.photos.search&text=%@&per_page=10", HOST, API_KEY, text] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLPathAllowedCharacterSet]]];
+    NSString *urlString = [[NSString stringWithFormat:@"%@api_key=%@&method=flickr.photos.search&text=%@&per_page=10", HOST, API_KEY, text] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
+    NSURL *requestUrl = [NSURL URLWithString:urlString];
     [FlickrNetwork loadPhotoIDsWithURL:requestUrl delegate:delegate];
 }
 

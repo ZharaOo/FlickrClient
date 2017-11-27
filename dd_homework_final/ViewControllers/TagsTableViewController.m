@@ -9,12 +9,12 @@
 #import "TagsTableViewController.h"
 #import "PhotosCollectionViewController.h"
 #import "TagsService.h"
-#import "FlickrNetwork.h"
+#import "SearchContent.h"
 
 #define SHOW_PHOTOS_SEGUE_ID @"photosCollectionSegue"
 
 @interface TagsTableViewController () <TagsServiceDelegate, UITextFieldDelegate> {
-    NSString *selectedTag;
+    SearchContent *selectedContent;
     TagsService *service;
 }
 
@@ -33,6 +33,7 @@
     self.searchTextField = [[UITextField alloc] initWithFrame:CGRectMake(0.0, 0.0, self.tableView.frame.size.width, 30.0)];
     self.searchTextField.borderStyle = UITextBorderStyleRoundedRect;
     self.searchTextField.returnKeyType = UIReturnKeySearch;
+    self.searchTextField.backgroundColor = [UIColor lightGrayColor];
     self.searchTextField.delegate = self;
     
     service = [[TagsService alloc] init];
@@ -87,7 +88,8 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     if (textField == self.searchTextField) {
         if ([textField hasText]) {
-            
+            selectedContent = [[SearchContent alloc] initWithContent:textField.text type:ContentTypeText];
+            [self performSegueWithIdentifier:SHOW_PHOTOS_SEGUE_ID sender:self];
         }
         return NO;
     }
@@ -111,7 +113,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    selectedTag = cell.textLabel.text;
+    selectedContent = [[SearchContent alloc] initWithContent:cell.textLabel.text type:ContentTypeTag];
     [self performSegueWithIdentifier:SHOW_PHOTOS_SEGUE_ID sender:self];
 }
 
@@ -120,7 +122,7 @@
  - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
      if ([segue.identifier isEqual:SHOW_PHOTOS_SEGUE_ID]) {
          PhotosCollectionViewController *dvc = (PhotosCollectionViewController *)segue.destinationViewController;
-         dvc.selectedTag = selectedTag;
+         dvc.selectedContent = selectedContent;
      }
  }
 

@@ -10,6 +10,7 @@
 #import "ShowPhotoViewController.h"
 #import "ParamPhotosService.h"
 #import "PhotoImage.h"
+#import "SearchContent.h"
 
 #define SHOW_VIEW_PHOTO_ID @"viewPhotoSegue"
 
@@ -33,7 +34,7 @@ static NSString * const reuseIdentifier = @"CollectionCell";
     
     [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
     
-    self.navigationItem.title = self.selectedTag;
+    self.navigationItem.title = self.selectedContent.content;
     
     self.indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     self.indicator.center = CGPointMake(self.collectionView.frame.size.width / 2, self.collectionView.frame.size.height / 2);
@@ -42,9 +43,17 @@ static NSString * const reuseIdentifier = @"CollectionCell";
     
     self.photos = [[NSMutableArray alloc] init];
     
-    service = [[ParamPhotosService alloc] initWithTag:self.selectedTag];
+    service = [[ParamPhotosService alloc] init];
     service.delegate = self;
-    [service loadTagPhotos:self.selectedTag];
+    [self loadPhotos];
+}
+
+- (void)loadPhotos {
+    if (self.selectedContent.type == ContentTypeTag) {
+        [service loadTagPhotos:self.selectedContent.content];
+    } else if (self.selectedContent.type == ContentTypeText){
+        [service loadTextPhotos:self.selectedContent.content];
+    }
 }
 
 - (void)addPhotoImage:(PhotoImage *)photoImage {
