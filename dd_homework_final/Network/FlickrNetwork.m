@@ -19,7 +19,7 @@
     NSURL *requestUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@api_key=%@&method=flickr.tags.getHotList&count=10", HOST, API_KEY]];
     
     NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
-    [FlickrNetwork addTaskToSession:session url:requestUrl tag:nil photoID:nil delegate:delegate completionHandlerWithoutError:^(NSDictionary *loadedData, NSString *tag, NSString *photoID) {
+    [FlickrNetwork addTaskToSession:session url:requestUrl delegate:delegate completionHandlerWithoutError:^(NSDictionary *loadedData) {
         NSArray *tags = [[loadedData objectForKey:@"hottags"] objectForKey:@"tag"];
         NSMutableArray *tagsContent = [[NSMutableArray alloc] init];
         for (NSDictionary *dic in tags) {
@@ -32,11 +32,19 @@
     }];
 }
 
-+ (void)loadPhotoIDsWithTag:(NSString *)tag delegate:(id <FlickrNetworkTagPhotosDelegate>)delegate {
++ (void)loadPhotoIDsWithTag:(NSString *)tag delegate:(id <FlickrNetworkParamPhotosDelegate>)delegate {
     NSURL *requestUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@api_key=%@&method=flickr.photos.search&tags=%@&per_page=10", HOST, API_KEY, tag]];
-    
+    [FlickrNetwork loadPhotoIDsWithURL:requestUrl delegate:delegate];
+}
+
++ (void)loadPhotoIDsWithText:(NSString *)text delegate:(id <FlickrNetworkParamPhotosDelegate>)delegate {
+    NSURL *requestUrl = [NSURL URLWithString:[[NSString stringWithFormat:@"%@api_key=%@&method=flickr.photos.search&text=%@&per_page=10", HOST, API_KEY, text] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLPathAllowedCharacterSet]]];
+    [FlickrNetwork loadPhotoIDsWithURL:requestUrl delegate:delegate];
+}
+
++ (void)loadPhotoIDsWithURL:(NSURL *)url delegate:(id <FlickrNetworkParamPhotosDelegate>)delegate {
     NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
-    [FlickrNetwork addTaskToSession:session url:requestUrl tag:tag photoID:nil delegate:delegate completionHandlerWithoutError:^(NSDictionary *loadedData, NSString *tag, NSString *photoID) {
+    [FlickrNetwork addTaskToSession:session url:url delegate:delegate completionHandlerWithoutError:^(NSDictionary *loadedData) {
         NSArray *loadedPhotoIDs = [[loadedData objectForKey:@"photos"] objectForKey:@"photo"];
         NSMutableArray *photoIDs = [[NSMutableArray alloc] init];
         for (NSDictionary *dic in loadedPhotoIDs) {
@@ -49,7 +57,7 @@
     }];
 }
 
-+ (void)loadSizeOfPhotosWithID:(NSArray *)photoIDs delegate:(id <FlickrNetworkTagPhotosDelegate>)delegate {
++ (void)loadSizeOfPhotosWithID:(NSArray *)photoIDs delegate:(id <FlickrNetworkParamPhotosDelegate>)delegate {
     NSURLSessionConfiguration *sessionConfig = [NSURLSessionConfiguration defaultSessionConfiguration];
     sessionConfig.HTTPMaximumConnectionsPerHost = 2;
     sessionConfig.timeoutIntervalForResource = 0;
@@ -60,7 +68,7 @@
     for (NSString *pID in photoIDs) {
         NSURL *requestUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@api_key=%@&method=flickr.photos.getSizes&photo_id=%@", HOST, API_KEY, pID]];
         
-        [FlickrNetwork addTaskToSession:session url:requestUrl tag:nil photoID:pID delegate:delegate completionHandlerWithoutError:^(NSDictionary *loadedData, NSString *tag, NSString *photoID) {
+        [FlickrNetwork addTaskToSession:session url:requestUrl delegate:delegate completionHandlerWithoutError:^(NSDictionary *loadedData) {
             NSArray *loadedPhotoSizesURL = [[loadedData objectForKey:@"sizes"] objectForKey:@"size"];
             NSMutableDictionary *requredPhotoSizesURL = [[NSMutableDictionary alloc] init];
             for (NSDictionary *dic in loadedPhotoSizesURL) {
@@ -76,7 +84,7 @@
     }
 }
 
-+ (void)loadPhotoWithSize:(NSString *)size photoSizes:(NSDictionary *)photoSizesURL session:(NSURLSession *)session delegate:(id <FlickrNetworkTagPhotosDelegate>)delegate {
++ (void)loadPhotoWithSize:(NSString *)size photoSizes:(NSDictionary *)photoSizesURL session:(NSURLSession *)session delegate:(id <FlickrNetworkParamPhotosDelegate>)delegate {
     NSString *urlString = [NSString stringWithFormat:@"%@", [photoSizesURL objectForKey:size]];
     NSURL *requestURL = [NSURL URLWithString:urlString];
     
@@ -97,7 +105,7 @@
      }] resume];
 }
 
-+ (void)addTaskToSession:(NSURLSession *)session url:(NSURL *)url tag:(NSString *)tag photoID:(NSString *)photoID delegate:(id)delegate completionHandlerWithoutError:(void (^)(NSDictionary *, NSString *, NSString *))processingOfReceivedData {
++ (void)addTaskToSession:(NSURLSession *)session url:(NSURL *)url delegate:(id)delegate completionHandlerWithoutError:(void (^)(NSDictionary *))processingOfReceivedData {
     [[session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         NSDictionary *serverAnswer = [FlickrNetwork getServerAnswer:data response:(NSHTTPURLResponse *)response error:error];
         
@@ -106,7 +114,7 @@
                 [delegate errorLoadingDataWithTitle:serverAnswer[@"Error"] description:serverAnswer[@"Description"]];
             });
         } else {
-            processingOfReceivedData(serverAnswer, tag, photoID);
+            processingOfReceivedData(serverAnswer);
         }
     }] resume];
 }

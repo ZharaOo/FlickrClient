@@ -6,19 +6,16 @@
 //  Copyright © 2017 Ivan Babkin. All rights reserved.
 //
 
-#import "TagPhotosService.h"
+#import "ParamPhotosService.h"
 #import "FlickrNetwork.h"
 
-@interface TagPhotosService () <FlickrNetworkTagPhotosDelegate>
+@interface ParamPhotosService () <FlickrNetworkParamPhotosDelegate>
 
 @property (nonatomic, copy) NSString *tag;
-//@property (nonatomic, copy) NSArray *photoIDs;
-//@property (nonatomic, strong) NSMutableArray *photosSizeWithURL;
-//@property (nonatomic, strong) NSMutableArray *photos;
 
 @end
 
-@implementation TagPhotosService
+@implementation ParamPhotosService
 
 - (id)initWithTag:(NSString *)tag {
     self = [super init];
@@ -27,6 +24,10 @@
         _nubmerOfPhotos = 0;
     }
     return self;
+}
+
+- (void)loadTextPhotos:(NSString *)text {
+    [FlickrNetwork loadPhotoIDsWithText:text delegate:self];
 }
 
 - (void)loadTagPhotos:(NSString *)tag {

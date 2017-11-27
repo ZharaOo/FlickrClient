@@ -9,6 +9,7 @@
 #import "TagsTableViewController.h"
 #import "PhotosCollectionViewController.h"
 #import "TagsService.h"
+#import "FlickrNetwork.h"
 
 #define SHOW_PHOTOS_SEGUE_ID @"photosCollectionSegue"
 

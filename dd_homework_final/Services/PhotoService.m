@@ -9,7 +9,7 @@
 #import "PhotoService.h"
 #import "FlickrNetwork.h"
 
-@interface PhotoService () <FlickrNetworkTagPhotosDelegate>
+@interface PhotoService () <FlickrNetworkParamPhotosDelegate>
 
 @end
 

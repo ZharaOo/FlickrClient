@@ -10,17 +10,17 @@
 
 @class PhotoImage;
 
-@protocol TagPhotosDelegate <NSObject>
+@protocol ParamPhotosDelegate <NSObject>
 - (void)addPhotoImage:(PhotoImage *)photoImage;
 - (void)updateNumberOfPhotos;
 @end
 
-@interface TagPhotosService : NSObject
+@interface ParamPhotosService : NSObject
 
 - (id)initWithTag:(NSString *)tag;
 
 @property (nonatomic, assign) NSInteger nubmerOfPhotos;
-@property (nonatomic, weak) id <TagPhotosDelegate> delegate;
+@property (nonatomic, weak) id <ParamPhotosDelegate> delegate;
 - (void)loadTagPhotos:(NSString *)tag;
 
 @end

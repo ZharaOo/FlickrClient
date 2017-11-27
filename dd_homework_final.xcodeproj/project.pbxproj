@@ -16,7 +16,7 @@
 		2C4C29591FC618AC00C34128 /* TagsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C4C29581FC618AC00C34128 /* TagsTableViewController.m */; };
 		2C7EDDFA1FC866D1002C8450 /* TagsService.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C7EDDF91FC866D1002C8450 /* TagsService.m */; };
 		2CB5E0A01FC8A3CA00E75C03 /* PhotoImage.h in Resources */ = {isa = PBXBuildFile; fileRef = 2CDE8C6A1FC747950068FED5 /* PhotoImage.h */; };
-		2CB5E0A11FC8A42000E75C03 /* TagPhotosService.h in Resources */ = {isa = PBXBuildFile; fileRef = 2CDE8C6D1FC774B30068FED5 /* TagPhotosService.h */; };
+		2CB5E0A11FC8A42000E75C03 /* ParamPhotosService.h in Resources */ = {isa = PBXBuildFile; fileRef = 2CDE8C6D1FC774B30068FED5 /* ParamPhotosService.h */; };
 		2CB5E0A21FC8A42000E75C03 /* TagsService.h in Resources */ = {isa = PBXBuildFile; fileRef = 2C7EDDF81FC866D1002C8450 /* TagsService.h */; };
 		2CB5E0A31FC8A42000E75C03 /* PhotoService.h in Resources */ = {isa = PBXBuildFile; fileRef = 2CBC99E51FC8962500522FB4 /* PhotoService.h */; };
 		2CB5E0A41FC8A42000E75C03 /* FlickrNetwork.h in Resources */ = {isa = PBXBuildFile; fileRef = 2C4C29511FC5FF6600C34128 /* FlickrNetwork.h */; };
@@ -25,7 +25,7 @@
 		2CBC99EA1FC89B1300522FB4 /* Sizes.h in Resources */ = {isa = PBXBuildFile; fileRef = 2CBC99E81FC8988F00522FB4 /* Sizes.h */; };
 		2CDE8C661FC7363C0068FED5 /* PhotosCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CDE8C651FC7363C0068FED5 /* PhotosCollectionViewController.m */; };
 		2CDE8C6C1FC747950068FED5 /* PhotoImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CDE8C6B1FC747950068FED5 /* PhotoImage.m */; };
-		2CDE8C6F1FC774B30068FED5 /* TagPhotosService.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CDE8C6E1FC774B30068FED5 /* TagPhotosService.m */; };
+		2CDE8C6F1FC774B30068FED5 /* ParamPhotosService.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CDE8C6E1FC774B30068FED5 /* ParamPhotosService.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,8 +52,8 @@
 		2CDE8C651FC7363C0068FED5 /* PhotosCollectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PhotosCollectionViewController.m; sourceTree = "<group>"; };
 		2CDE8C6A1FC747950068FED5 /* PhotoImage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PhotoImage.h; sourceTree = "<group>"; };
 		2CDE8C6B1FC747950068FED5 /* PhotoImage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PhotoImage.m; sourceTree = "<group>"; };
-		2CDE8C6D1FC774B30068FED5 /* TagPhotosService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TagPhotosService.h; sourceTree = "<group>"; };
-		2CDE8C6E1FC774B30068FED5 /* TagPhotosService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TagPhotosService.m; sourceTree = "<group>"; };
+		2CDE8C6D1FC774B30068FED5 /* ParamPhotosService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ParamPhotosService.h; sourceTree = "<group>"; };
+		2CDE8C6E1FC774B30068FED5 /* ParamPhotosService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ParamPhotosService.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,8 +106,8 @@
 		2CBC99DF1FC88DE500522FB4 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				2CDE8C6D1FC774B30068FED5 /* TagPhotosService.h */,
-				2CDE8C6E1FC774B30068FED5 /* TagPhotosService.m */,
+				2CDE8C6D1FC774B30068FED5 /* ParamPhotosService.h */,
+				2CDE8C6E1FC774B30068FED5 /* ParamPhotosService.m */,
 				2C7EDDF81FC866D1002C8450 /* TagsService.h */,
 				2C7EDDF91FC866D1002C8450 /* TagsService.m */,
 				2CBC99E51FC8962500522FB4 /* PhotoService.h */,
@@ -196,7 +196,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2CB5E0A11FC8A42000E75C03 /* TagPhotosService.h in Resources */,
+				2CB5E0A11FC8A42000E75C03 /* ParamPhotosService.h in Resources */,
 				2CB5E0A21FC8A42000E75C03 /* TagsService.h in Resources */,
 				2CB5E0A31FC8A42000E75C03 /* PhotoService.h in Resources */,
 				2CB5E0A41FC8A42000E75C03 /* FlickrNetwork.h in Resources */,
@@ -216,7 +216,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2C7EDDFA1FC866D1002C8450 /* TagsService.m in Sources */,
-				2CDE8C6F1FC774B30068FED5 /* TagPhotosService.m in Sources */,
+				2CDE8C6F1FC774B30068FED5 /* ParamPhotosService.m in Sources */,
 				2CDE8C661FC7363C0068FED5 /* PhotosCollectionViewController.m in Sources */,
 				2CBC99E41FC894E300522FB4 /* ShowPhotoViewController.m in Sources */,
 				2CBC99E71FC8962500522FB4 /* PhotoService.m in Sources */,

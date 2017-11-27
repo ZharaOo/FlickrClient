@@ -8,13 +8,13 @@
 
 #import "PhotosCollectionViewController.h"
 #import "ShowPhotoViewController.h"
-#import "TagPhotosService.h"
+#import "ParamPhotosService.h"
 #import "PhotoImage.h"
 
 #define SHOW_VIEW_PHOTO_ID @"viewPhotoSegue"
 
-@interface PhotosCollectionViewController () <TagPhotosDelegate> {
-    TagPhotosService *service;
+@interface PhotosCollectionViewController () <ParamPhotosDelegate> {
+    ParamPhotosService *service;
     
     NSDictionary *chosenImageSizes;
 }
@@ -42,7 +42,7 @@ static NSString * const reuseIdentifier = @"CollectionCell";
     
     self.photos = [[NSMutableArray alloc] init];
     
-    service = [[TagPhotosService alloc] initWithTag:self.selectedTag];
+    service = [[ParamPhotosService alloc] initWithTag:self.selectedTag];
     service.delegate = self;
     [service loadTagPhotos:self.selectedTag];
 }
