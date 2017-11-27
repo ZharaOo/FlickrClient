@@ -17,6 +17,7 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *photoImageView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *indicator;
+@property (weak, nonatomic) IBOutlet UIScrollView *zoomScrollView;
 
 @end
 
@@ -24,6 +25,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.zoomScrollView.minimumZoomScale = 1.0;
+    self.zoomScrollView.maximumZoomScale = 6.0;
+    self.zoomScrollView.contentSize = self.photoImageView.frame.size;
 
     service = [[PhotoService alloc] init];
     service.delegate = self;
@@ -45,6 +50,10 @@
     self.indicator.hidden = YES;
     
     self.photoImageView.image = photoImage.image;
+}
+
+- (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
+    return self.photoImageView;
 }
 
 - (void)errorLoadingDataWithTitle:(NSString *)title description:(NSString *)errorDescription {
